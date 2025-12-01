@@ -42,7 +42,7 @@ export default function IssueDetailsPage({ params }: { params: Promise<{ id: str
             setLoading(true);
             try {
                 const [fetchedIssue, fetchedUsers, fetchedLabels] = await Promise.all([
-                    fetch(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8081/api' + `/issues/${id}`, { headers: { 'X-API-Key': 'secret' } }).then(res => res.json()),
+                    api.getIssueDetails(Number(id)),
                     api.getUsers(),
                     api.getLabels(),
                 ]);

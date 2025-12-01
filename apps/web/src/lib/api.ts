@@ -51,6 +51,12 @@ export const api = {
         return res.json() as Promise<Issue[]>;
     },
 
+    getIssueDetails: async (id: number) => {
+        const res = await fetch(`${API_URL}/issues/${id}`, { headers });
+        if (!res.ok) throw new Error('Failed to fetch issue');
+        return res.json() as Promise<Issue>;
+    },
+
     createIssue: async (data: Partial<Issue> & { label_ids?: number[] }) => {
         const res = await fetch(`${API_URL}/issues`, {
             method: 'POST',
