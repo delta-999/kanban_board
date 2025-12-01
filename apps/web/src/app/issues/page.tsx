@@ -32,7 +32,9 @@ import { useRouter, useSearchParams } from 'next/navigation';
 
 import { MultiSelectFilter } from '@/components/multi-select-filter';
 
-export default function IssuesPage() {
+import { Suspense } from 'react';
+
+function IssuesBoard() {
     const router = useRouter();
     const searchParams = useSearchParams();
 
@@ -277,5 +279,13 @@ export default function IssuesPage() {
                 )}
             </KanbanProvider>
         </div>
+    );
+}
+
+export default function IssuesPage() {
+    return (
+        <Suspense fallback={<div className="p-4">Loading board...</div>}>
+            <IssuesBoard />
+        </Suspense>
     );
 }
