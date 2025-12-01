@@ -1,6 +1,10 @@
 # Kanban Board Application
 
-A full-stack Kanban board application built with Go (Gin), Next.js, and PostgreSQL.
+A full-stack Kanban board application built with Go, Next.js, and PostgreSQL.
+
+#Live URL
+
+http://43.204.102.132:3000/
 
 ## Features
 
@@ -14,15 +18,15 @@ A full-stack Kanban board application built with Go (Gin), Next.js, and PostgreS
 ## Tech Stack
 
 - **Frontend**: Next.js 15, React, TypeScript, Tailwind CSS, shadcn/ui, dnd-kit, Bun.
-- **Backend**: Go 1.23, Gin Web Framework, sqlx.
+- **Backend**: Go, Gin Web Framework, sqlx.
 - **Database**: PostgreSQL.
 - **Containerization**: Docker, Docker Compose.
 
 ## Prerequisites
 
 - Docker & Docker Compose
-- Bun (for local frontend development)
-- Go 1.23+ (for local backend development)
+- Bun/npm (for local frontend development)
+- Go (for local backend development)
 
 ## Getting Started
 
@@ -55,9 +59,18 @@ go mod download
 ```
 
 Run the server:
-```bash
-export DB_HOST=localhost DB_USER=postgres DB_PASSWORD=password DB_NAME=kanban DB_PORT=5433 PORT=8081
+
+
+if .env is added for backend - 
+
 go run cmd/server/main.go
+
+else 
+
+export DB_HOST=localhost DB_USER=postgres DB_PASSWORD=password DB_NAME=kanban DB_PORT=5433 PORT=8081
+
+go run cmd/server/main.go
+
 ```
 
 Seed the database (optional):

@@ -1,4 +1,4 @@
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     avatar_url VARCHAR(255),
@@ -6,7 +6,7 @@ CREATE TABLE users (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE labels (
+CREATE TABLE IF NOT EXISTS labels (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL UNIQUE,
     color VARCHAR(50) NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE labels (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE issues (
+CREATE TABLE IF NOT EXISTS issues (
     id SERIAL PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     description TEXT,
@@ -27,7 +27,7 @@ CREATE TABLE issues (
     deleted_at TIMESTAMP WITH TIME ZONE
 );
 
-CREATE TABLE issue_labels (
+CREATE TABLE IF NOT EXISTS issue_labels (
     issue_id INT REFERENCES issues(id) ON DELETE CASCADE,
     label_id INT REFERENCES labels(id) ON DELETE CASCADE,
     PRIMARY KEY (issue_id, label_id)

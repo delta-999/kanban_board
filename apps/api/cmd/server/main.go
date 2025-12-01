@@ -22,6 +22,9 @@ func main() {
 
 	database.Connect()
 
+	// Apply migrations on startup
+	database.ApplyMigrations()
+
 	r := gin.Default()
 
 	config := cors.DefaultConfig()

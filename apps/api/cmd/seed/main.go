@@ -20,45 +20,7 @@ func main() {
 
 	database.Connect()
 
-	// Apply migrations (Simple approach for dev)
-	log.Println("Applying migrations...")
-	schema := `
-	CREATE TABLE IF NOT EXISTS users (
-		id SERIAL PRIMARY KEY,
-		name VARCHAR(255) NOT NULL,
-		avatar_url VARCHAR(255),
-		created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-		updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
-	);
-	
-	CREATE TABLE IF NOT EXISTS labels (
-		id SERIAL PRIMARY KEY,
-		name VARCHAR(255) NOT NULL UNIQUE,
-		color VARCHAR(50) NOT NULL,
-		created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-		updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
-	);
-	
-	CREATE TABLE IF NOT EXISTS issues (
-		id SERIAL PRIMARY KEY,
-		title VARCHAR(255) NOT NULL,
-		description TEXT,
-		status VARCHAR(50) NOT NULL DEFAULT 'Backlog',
-		priority VARCHAR(50) NOT NULL DEFAULT 'Low',
-		assignee_id INT REFERENCES users(id),
-		order_index FLOAT NOT NULL DEFAULT 0,
-		created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-		updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-		deleted_at TIMESTAMP WITH TIME ZONE
-	);
-	
-	CREATE TABLE IF NOT EXISTS issue_labels (
-		issue_id INT REFERENCES issues(id) ON DELETE CASCADE,
-		label_id INT REFERENCES labels(id) ON DELETE CASCADE,
-		PRIMARY KEY (issue_id, label_id)
-	);
-	`
-	database.DB.MustExec(schema)
+	database.ApplyMigrations()
 
 	// Clean up
 	log.Println("Cleaning up database...")

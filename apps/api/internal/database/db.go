@@ -32,3 +32,35 @@ func Connect() {
 
 	log.Println("Connected to database successfully")
 }
+
+func ApplyMigrations() {
+	log.Println("Applying migrations...")
+	
+	paths := []string{
+		"migrations/000001_init_schema.up.sql",
+		"../../migrations/000001_init_schema.up.sql",
+	}
+
+	var schemaBytes []byte
+	var err error
+
+	for _, path := range paths {
+		schemaBytes, err = os.ReadFile(path)
+		if err == nil {
+			break
+		}
+	}
+
+	if len(schemaBytes) == 0 {
+		log.Printf("Warning: Could not read migration file. Skipping auto-migration.")
+		return
+	}
+
+	schema := string(schemaBytes)
+	_, err = DB.Exec(schema)
+	if err != nil {
+		log.Printf("Error applying migrations: %v", err)
+	} else {
+		log.Println("Migrations applied successfully")
+	}
+}
